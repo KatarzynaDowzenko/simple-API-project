@@ -10,8 +10,8 @@ namespace LibraryProject.Entities
     public class BorrowedBook
     {
         public int Id { get; set; }
-        public int IdCostumer { get; set; }
-        public int IdBook { get; set; }
+        public int CostumerId { get; set; }
+        public int BookId { get; set; }
         public DateTime DateOfBorrowingBook { get; set; }
         public DateTime? DateOfReturningBook { get; set; }
         public virtual Customer customer { get; set; }
