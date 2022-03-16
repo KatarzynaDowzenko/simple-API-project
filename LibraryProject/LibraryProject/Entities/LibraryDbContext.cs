@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace LibraryProject.Entities
 {
@@ -23,7 +18,7 @@ namespace LibraryProject.Entities
                 .HasMaxLength(100);
 
             modelBuilder.Entity<Book>()
-                .Property(b => b.AuthoLastName)
+                .Property(b => b.AuthorLastName)
                 .IsRequired()
                 .HasMaxLength(100);
 

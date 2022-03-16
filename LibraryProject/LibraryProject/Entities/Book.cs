@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace LibraryProject.Entities
 {
@@ -11,7 +6,7 @@ namespace LibraryProject.Entities
     {
         public int Id { get; set; }
         public string AuthorName { get; set; }
-        public string AuthoLastName { get; set; }
+        public string AuthorLastName { get; set; }
         public string Title { get; set; }
         public string TypeOfBook { get; set; }
         public bool IsAvailable { get; set; }
