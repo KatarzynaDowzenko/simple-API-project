@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace LibraryProject.Entities
 {
     public class BorrowedBook
@@ -9,7 +8,7 @@ namespace LibraryProject.Entities
         public int BookId { get; set; }
         public DateTime DateOfBorrowingBook { get; set; }
         public DateTime? DateOfReturningBook { get; set; }
-        public virtual Customer customer { get; set; }
-        public virtual Book book { get; set; } 
+        public virtual Customer Customer { get; set; }
+        public virtual Book Book { get; set; } 
     }
 }

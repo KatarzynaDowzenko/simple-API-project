@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryProject.Models
 {
-    public class CostumerDto
+    public class CustomerDto
     {
     }
 }

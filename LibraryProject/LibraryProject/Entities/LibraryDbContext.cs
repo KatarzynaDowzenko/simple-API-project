@@ -4,7 +4,7 @@ namespace LibraryProject.Entities
 {
     public class LibraryDbContext : DbContext
     {
-        private string _connectionString = "Server=(localdb)\\mssqllocaldb;Database=LibraryDb;Trusted_Connection=True;";
+        private readonly string _connectionString = "Server=(localdb)\\mssqllocaldb;Database=LibraryDb;Trusted_Connection=True;";
         public DbSet<Book> Books { get; set; }
         public DbSet<BookStatus> BooksStatus { get; set; }
         public DbSet<BorrowedBook> BorrowedBooks { get; set; }
@@ -34,8 +34,7 @@ namespace LibraryProject.Entities
 
             modelBuilder.Entity<BorrowedBook>()
                 .Property(bb => bb.DateOfBorrowingBook)
-                .IsRequired()
-                .HasMaxLength(100);
+                .IsRequired();
 
             modelBuilder.Entity<Customer>()
                 .Property(c => c.Name)
@@ -43,14 +42,13 @@ namespace LibraryProject.Entities
                 .HasMaxLength(100);
 
             modelBuilder.Entity<Customer>()
-              .Property(c => c.LastName)
-              .IsRequired()
-              .HasMaxLength(100);
+                .Property(c => c.LastName)
+                .IsRequired()
+                .HasMaxLength(100);
 
             modelBuilder.Entity<Customer>()
-              .Property(c => c.DateOfBirth)
-              .IsRequired()
-              .HasMaxLength(100);
+                .Property(c => c.DateOfBirth)
+                .IsRequired();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
