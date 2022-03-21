@@ -28,7 +28,7 @@ namespace LibraryProject.Entities
                 .HasMaxLength(100);
 
             modelBuilder.Entity<BookStatus>()
-                .Property(s => s.Status)
+                .Property(bs => bs.Status)
                 .IsRequired()
                 .HasMaxLength(100);
 

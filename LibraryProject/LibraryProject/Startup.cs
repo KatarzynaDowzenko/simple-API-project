@@ -34,11 +34,16 @@ namespace LibraryProject
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LibraryProject", Version = "v1" });
             });
+            services.AddDbContext<LibraryDbContext>();
+            services.AddScoped<LibrarySeeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, LibrarySeeder seeder)
         {
+            seeder.SeedBookStatus();
+            seeder.SeedBooks();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
