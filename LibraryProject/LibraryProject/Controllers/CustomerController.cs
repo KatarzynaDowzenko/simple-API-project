@@ -1,4 +1,6 @@
-﻿using LibraryProject.Entities;
+﻿using AutoMapper;
+using LibraryProject.Entities;
+using LibraryProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +12,21 @@ namespace LibraryProject.Controllers
     {
         //add, delate and check list of users 
         private readonly LibraryDbContext _dbContext;
-        public CustomerController(LibraryDbContext dbContext)
+        private readonly IMapper _mapper;
+        public CustomerController(LibraryDbContext dbContext, IMapper mapper)
         {
             this._dbContext = dbContext;
+            _mapper = mapper;
         }
-        public ActionResult<IEnumerable<Customer>> GetAll()
+        public ActionResult<IEnumerable<CustomerDto>> GetAll()
         {
             var customers = _dbContext
-                .Books
+                .Customers
                 .ToList();
 
-            return Ok(customers);
+            var customerDto = _mapper.Map<List<CustomerDto>>(customers);
+
+            return Ok(customerDto);
         }
 
         [HttpGet("{id}")]
@@ -35,7 +41,9 @@ namespace LibraryProject.Controllers
                 return NotFound();
             }
 
-            return Ok(customer);
+            var customerDto = _mapper.Map<List<CustomerDto>>(customer);
+
+            return Ok(customerDto);
         }
     }
 }

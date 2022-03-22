@@ -1,5 +1,8 @@
-﻿using LibraryProject.Entities;
+﻿using AutoMapper;
+using LibraryProject.Entities;
+using LibraryProject.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,22 +13,27 @@ namespace LibraryProject.Controllers
     {
         //check list of books and add/delate book, changed bookstatus
         private readonly LibraryDbContext _dbContext;
-        public BookController(LibraryDbContext dbContext)
+        private readonly IMapper _mapper;
+        public BookController(LibraryDbContext dbContext, IMapper mapper)
         {
             this._dbContext = dbContext;
+            _mapper = mapper;
         }
+
         [HttpGet]
-        public ActionResult<IEnumerable<Book>> GetAll()
+        public ActionResult<IEnumerable<BookDto>> GetAll()
         {
             var books = _dbContext
                 .Books
                 .ToList();
 
-            return Ok(books);
+            var booksDto = _mapper.Map<List<BookDto>>(books);
+
+            return Ok(booksDto);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Book> Get([FromRoute] int id)
+        public ActionResult<BookDto> Get([FromRoute] int id)
         {
             var book = _dbContext
                .Books
@@ -35,8 +43,9 @@ namespace LibraryProject.Controllers
             {
                 return NotFound();
             }
+            var booksDto = _mapper.Map<List<BookDto>>(book);
 
-            return Ok(book);
+            return Ok(booksDto);
         }
     }
 }

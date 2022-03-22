@@ -11,7 +11,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryProject
 {
-    public class LibraryMappingProfile
+    public class LibraryMappingProfile : Profile
     {
+        public LibraryMappingProfile()
+        {
+            CreateMap<Book, BookDto>();
+                
+            CreateMap<BorrowedBook, BorrowedBookDto>()
+                .ForMember(m => m.BookId, c => c.MapFrom(s => s.BookId));
+
+            CreateMap<Customer, CustomerDto>();
+        }
     }
 }

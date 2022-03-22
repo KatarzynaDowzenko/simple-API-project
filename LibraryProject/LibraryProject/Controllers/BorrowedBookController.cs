@@ -1,4 +1,6 @@
-﻿using LibraryProject.Entities;
+﻿using AutoMapper;
+using LibraryProject.Entities;
+using LibraryProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +12,22 @@ namespace LibraryProject.Controllers
     {
         //get or give back borrowed books and check list of all aviliable books
         private readonly LibraryDbContext _dbContext;
-        public BorrowedBookController(LibraryDbContext dbContext)
+        private readonly IMapper _mapper;
+        public BorrowedBookController(LibraryDbContext dbContext, IMapper mapper)
         {
             this._dbContext = dbContext;
+            _mapper = mapper;
         }
         [HttpGet]
-        public ActionResult<IEnumerable<BorrowedBook>> GetAll()
+        public ActionResult<IEnumerable<BorrowedBookDto>> GetAll()
         {
             var borrowedBooks = _dbContext
-                .Books
+                .BorrowedBooks
                 .ToList();
 
-            return Ok(borrowedBooks);
+            var borrowedBooksDto = _mapper.Map<List<BorrowedBookDto>>(borrowedBooks);
+
+            return Ok(borrowedBooksDto);
         }
 
         [HttpGet("{id}")]
@@ -35,8 +41,9 @@ namespace LibraryProject.Controllers
             {
                 return NotFound();
             }
+            var borrowedBooksDto = _mapper.Map<List<BorrowedBookDto>>(borrowedBook);
 
-            return Ok(borrowedBook);
+            return Ok(borrowedBooksDto);
         }
     }
 }
