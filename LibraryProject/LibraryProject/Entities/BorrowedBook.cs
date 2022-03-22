@@ -1,7 +1,7 @@
 ﻿using System;
 namespace LibraryProject.Entities
 {
-    public class BorrowedBook
+    public class Customers
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }

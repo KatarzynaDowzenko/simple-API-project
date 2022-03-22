@@ -7,7 +7,7 @@ namespace LibraryProject.Entities
         private readonly string _connectionString = "Server=(localdb)\\mssqllocaldb;Database=LibraryDb;Trusted_Connection=True;";
         public DbSet<Book> Books { get; set; }
         public DbSet<BookStatus> BooksStatus { get; set; }
-        public DbSet<BorrowedBook> BorrowedBooks { get; set; }
+        public DbSet<Customers> BorrowedBooks { get; set; }
         public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,12 +27,17 @@ namespace LibraryProject.Entities
                 .IsRequired()
                 .HasMaxLength(100);
 
+            modelBuilder.Entity<Book>()
+                .Property(b => b.TypeOfBook)
+                .IsRequired()
+                .HasMaxLength(150);
+
             modelBuilder.Entity<BookStatus>()
                 .Property(bs => bs.Status)
                 .IsRequired()
                 .HasMaxLength(100);
 
-            modelBuilder.Entity<BorrowedBook>()
+            modelBuilder.Entity<Customers>()
                 .Property(bb => bb.DateOfBorrowingBook)
                 .IsRequired();
 
