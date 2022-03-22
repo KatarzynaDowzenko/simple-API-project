@@ -5,37 +5,38 @@ using System.Linq;
 
 namespace LibraryProject.Controllers
 {
-    [Route("api/customers")]
-    public class CustomerController : ControllerBase
+    [Route("api/books")]
+    public class BookController : ControllerBase
     {
-        //add, delate and check list of users 
+        //check list of books and add/delate book, changed bookstatus
         private readonly LibraryDbContext _dbContext;
-        public CustomerController(LibraryDbContext dbContext)
+        public BookController(LibraryDbContext dbContext)
         {
             this._dbContext = dbContext;
         }
-        public ActionResult<IEnumerable<Customer>> GetAll()
+        [HttpGet]
+        public ActionResult<IEnumerable<Book>> GetAll()
         {
-            var customers = _dbContext
+            var books = _dbContext
                 .Books
                 .ToList();
 
-            return Ok(customers);
+            return Ok(books);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Customer> Get([FromRoute] int id)
+        public ActionResult<Book> Get([FromRoute] int id)
         {
-            var customer = _dbContext
-               .Customers
+            var book = _dbContext
+               .Books
                .FirstOrDefault(x => x.Id == id);
 
-            if (customer is null)
+            if (book is null)
             {
                 return NotFound();
             }
 
-            return Ok(customer);
+            return Ok(book);
         }
     }
 }

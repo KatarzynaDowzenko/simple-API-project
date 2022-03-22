@@ -9,6 +9,6 @@ namespace LibraryProject.Entities
         public string Name { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public virtual List<Customers> BorrowedBooks { get; set; }
+        public virtual List<Customer> BorrowedBooks { get; set; }
     }
 }
