@@ -1,17 +1,16 @@
-﻿using System;
+﻿using LibraryProject.Entities;
+using System;
 
-namespace LibraryProject.Entities
+namespace LibraryProject.Models
 {
-    public class Book
+    public class AddBookDto
     {
         public int Id { get; set; }
         public string AuthorName { get; set; }
         public string AuthorLastName { get; set; }
         public string Title { get; set; }
         public string TypeOfBook { get; set; }
-        public bool IsAvailable { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public int? BookStatusId { get; set; }
-        public virtual BookStatus Status { get; set; }
+        public string Status { get; set; }
     }
 }

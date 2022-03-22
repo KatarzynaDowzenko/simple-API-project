@@ -41,7 +41,7 @@ namespace LibraryProject.Controllers
                 return NotFound();
             }
 
-            var customerDto = _mapper.Map<List<CustomerDto>>(customer);
+            var customerDto = _mapper.Map<CustomerDto>(customer);
 
             return Ok(customerDto);
         }

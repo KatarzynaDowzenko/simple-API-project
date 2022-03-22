@@ -20,6 +20,16 @@ namespace LibraryProject.Controllers
             _mapper = mapper;
         }
 
+        [HttpPost]
+        public ActionResult AddBook([FromBody] AddBookDto dto)
+        {
+            var book = _mapper.Map<Book>(dto);
+            _dbContext.Books.Add(book);
+            _dbContext.SaveChanges();
+
+            return Created($"/api/restaurant/{book.Id}", null);
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<BookDto>> GetAll()
         {
@@ -43,7 +53,7 @@ namespace LibraryProject.Controllers
             {
                 return NotFound();
             }
-            var booksDto = _mapper.Map<List<BookDto>>(book);
+            var booksDto = _mapper.Map<BookDto>(book);
 
             return Ok(booksDto);
         }

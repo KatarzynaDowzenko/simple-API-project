@@ -41,7 +41,7 @@ namespace LibraryProject.Controllers
             {
                 return NotFound();
             }
-            var borrowedBooksDto = _mapper.Map<List<BorrowedBookDto>>(borrowedBook);
+            var borrowedBooksDto = _mapper.Map<BorrowedBookDto>(borrowedBook);
 
             return Ok(borrowedBooksDto);
         }

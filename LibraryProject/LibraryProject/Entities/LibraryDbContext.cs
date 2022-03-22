@@ -34,7 +34,6 @@ namespace LibraryProject.Entities
 
             modelBuilder.Entity<BookStatus>()
                 .Property(bs => bs.Status)
-                .IsRequired()
                 .HasMaxLength(100);
 
             modelBuilder.Entity<BorrowedBook>()
