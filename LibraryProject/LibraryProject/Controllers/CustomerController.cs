@@ -1,49 +1,62 @@
-﻿using AutoMapper;
-using LibraryProject.Entities;
-using LibraryProject.Models;
+﻿using LibraryProject.Models;
+using LibraryProject.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace LibraryProject.Controllers
 {
     [Route("api/customers")]
     public class CustomerController : ControllerBase
     {
-        //add, delate and check list of users 
-        private readonly LibraryDbContext _dbContext;
-        private readonly IMapper _mapper;
-        public CustomerController(LibraryDbContext dbContext, IMapper mapper)
+        private readonly ICustomerService _customerService;
+        public CustomerController(ICustomerService customerService)
         {
-            this._dbContext = dbContext;
-            _mapper = mapper;
+            _customerService = customerService;
         }
+
+        [HttpGet]
         public ActionResult<IEnumerable<CustomerDto>> GetAll()
         {
-            var customers = _dbContext
-                .Customers
-                .ToList();
+            var customers = _customerService.GetAll();
 
-            var customerDto = _mapper.Map<List<CustomerDto>>(customers);
-
-            return Ok(customerDto);
+            return Ok(customers);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Customer> Get([FromRoute] int id)
+        public ActionResult<CustomerDto> Get([FromRoute] int id)
         {
-            var customer = _dbContext
-               .Customers
-               .FirstOrDefault(x => x.Id == id);
+            var customer = _customerService.GetById(id);
 
             if (customer is null)
             {
                 return NotFound();
             }
 
-            var customerDto = _mapper.Map<CustomerDto>(customer);
+            return Ok(customer);
+        }
 
-            return Ok(customerDto);
+        [HttpPost]
+        public ActionResult AddBook([FromBody] AddCustomerDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var id = _customerService.Add(dto);
+            return Created($"/api/restaurant/{id}", null);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete([FromRoute] int id)
+        {
+            var isDeleted = _customerService.Delete(id);
+
+            if (isDeleted)
+            {
+                return NoContent();
+            }
+            return NotFound();
         }
     }
 }

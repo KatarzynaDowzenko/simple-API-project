@@ -1,49 +1,62 @@
-﻿using AutoMapper;
-using LibraryProject.Entities;
-using LibraryProject.Models;
+﻿using LibraryProject.Models;
+using LibraryProject.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace LibraryProject.Controllers
 {
     [Route("api/borrowedbooks")]
     public class BorrowedBookController : ControllerBase
     {
-        //get or give back borrowed books and check list of all aviliable books
-        private readonly LibraryDbContext _dbContext;
-        private readonly IMapper _mapper;
-        public BorrowedBookController(LibraryDbContext dbContext, IMapper mapper)
+        private readonly IBorrowedBookService _borrowedBookService;
+        public BorrowedBookController(IBorrowedBookService borrowedBookService)
         {
-            this._dbContext = dbContext;
-            _mapper = mapper;
+            _borrowedBookService = borrowedBookService;
         }
+
         [HttpGet]
         public ActionResult<IEnumerable<BorrowedBookDto>> GetAll()
         {
-            var borrowedBooks = _dbContext
-                .BorrowedBooks
-                .ToList();
+            var borrowedBooks = _borrowedBookService.GetAll();
 
-            var borrowedBooksDto = _mapper.Map<List<BorrowedBookDto>>(borrowedBooks);
-
-            return Ok(borrowedBooksDto);
+            return Ok(borrowedBooks);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<BorrowedBook> Get([FromRoute] int id)
+        public ActionResult<BorrowedBookDto> Get([FromRoute] int id)
         {
-            var borrowedBook = _dbContext
-               .BorrowedBooks
-               .FirstOrDefault(x => x.Id == id);
+            var borrowedBook = _borrowedBookService.GetById(id);
 
             if (borrowedBook is null)
             {
                 return NotFound();
             }
-            var borrowedBooksDto = _mapper.Map<BorrowedBookDto>(borrowedBook);
 
-            return Ok(borrowedBooksDto);
+            return Ok(borrowedBook);
+        }
+
+        [HttpPost]
+        public ActionResult AddBorrowedBook([FromBody] AddBorrowingBookDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var id = _borrowedBookService.Add(dto);
+            return Created($"/api/restaurant/{id}", null);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete([FromRoute] int id)
+        {
+            var isDeleted = _borrowedBookService.Delete(id);
+
+            if (isDeleted)
+            {
+                return NoContent();
+            }
+            return NotFound();
         }
     }
 }

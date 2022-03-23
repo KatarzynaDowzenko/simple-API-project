@@ -1,61 +1,62 @@
-﻿using AutoMapper;
-using LibraryProject.Entities;
-using LibraryProject.Models;
+﻿using LibraryProject.Models;
+using LibraryProject.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace LibraryProject.Controllers
 {
     [Route("api/books")]
     public class BookController : ControllerBase
     {
-        //check list of books and add/delate book, changed bookstatus
-        private readonly LibraryDbContext _dbContext;
-        private readonly IMapper _mapper;
-        public BookController(LibraryDbContext dbContext, IMapper mapper)
+        private readonly IBookService _bookService;
+        public BookController(IBookService bookService)
         {
-            this._dbContext = dbContext;
-            _mapper = mapper;
-        }
-
-        [HttpPost]
-        public ActionResult AddBook([FromBody] AddBookDto dto)
-        {
-            var book = _mapper.Map<Book>(dto);
-            _dbContext.Books.Add(book);
-            _dbContext.SaveChanges();
-
-            return Created($"/api/restaurant/{book.Id}", null);
+            _bookService = bookService;            
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<BookDto>> GetAll()
         {
-            var books = _dbContext
-                .Books
-                .ToList();
+            var books = _bookService.GetAll();                
 
-            var booksDto = _mapper.Map<List<BookDto>>(books);
-
-            return Ok(booksDto);
+            return Ok(books);
         }
 
         [HttpGet("{id}")]
         public ActionResult<BookDto> Get([FromRoute] int id)
         {
-            var book = _dbContext
-               .Books
-               .FirstOrDefault(x => x.Id == id);
+            var book = _bookService.GetById(id); 
 
             if (book is null)
             {
                 return NotFound();
             }
-            var booksDto = _mapper.Map<BookDto>(book);
+            
+            return Ok(book);
+        }
 
-            return Ok(booksDto);
+        [HttpPost]
+        public ActionResult AddBook([FromBody] AddBookDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var id = _bookService.Add(dto);
+            return Created($"/api/restaurant/{id}", null);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete([FromRoute] int id)
+        {
+            var isDeleted = _bookService.Delete(id);
+
+            if (isDeleted)
+            {
+                return NoContent();
+            }
+            return NotFound();
         }
     }
 }

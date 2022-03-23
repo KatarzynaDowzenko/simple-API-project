@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace LibraryProject.Entities
 {
     public class BorrowedBook
