@@ -27,9 +27,13 @@ namespace LibraryProject.Entities
                 .IsRequired()
                 .HasMaxLength(100);
 
+            modelBuilder.Entity<Book>()
+                .Property(b => b.TypeOfBook)
+                .IsRequired()
+                .HasMaxLength(150);
+
             modelBuilder.Entity<BookStatus>()
                 .Property(bs => bs.Status)
-                .IsRequired()
                 .HasMaxLength(100);
 
             modelBuilder.Entity<BorrowedBook>()

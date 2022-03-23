@@ -1,15 +1,12 @@
 ﻿using System;
 
-namespace LibraryProject.Entities
+namespace LibraryProject.Models
 {
-    public class BorrowedBook
+    public class BorrowedBookDto
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }
         public int BookId { get; set; }
         public DateTime DateOfBorrowingBook { get; set; }
         public DateTime? DateOfReturningBook { get; set; }
-        public virtual Customer Customer { get; set; }
-        public virtual Book Book { get; set; } 
     }
 }
