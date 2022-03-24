@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using LibraryProject.Entities;
+using LibraryProject.Exceptions;
 using LibraryProject.Models;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,20 +11,24 @@ namespace LibraryProject.Services
 {
     public interface IBookService
     {
-        int Add(AddBookDto dto);
-        bool Delete(int id);
         IEnumerable<BookDto> GetAll();
         BookDto GetById(int id);
+        int Add(AddBookDto dto);
+        void Update(int id, UpdateBookDto dto);
+        void Delete(int id);
+       
     }
 
     public class BookService : IBookService
     {
         private readonly LibraryDbContext _dbContext;
         private readonly IMapper _mapper;
-        public BookService(LibraryDbContext dbContext, IMapper mapper)
+        private readonly ILogger<BookService> _logger;
+        public BookService(LibraryDbContext dbContext, IMapper mapper, ILogger<BookService> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public IEnumerable<BookDto> GetAll()
@@ -41,27 +48,15 @@ namespace LibraryProject.Services
                .Books
                .FirstOrDefault(x => x.Id == id);
 
-            if (book is null) return null;
+            if (book is null)
+            {
+                throw new NotFoundException("Book not found");
+            }
 
             var bookDto = _mapper.Map<BookDto>(book);
 
             return bookDto;
         }
-
-        public bool Delete(int id)
-        {
-            var book = _dbContext
-              .Books
-              .FirstOrDefault(x => x.Id == id);
-
-            if (book is null) return false;
-
-            _dbContext.Books.Remove(book);
-            _dbContext.SaveChanges();
-
-            return true;
-        }
-
         public int Add(AddBookDto dto)
         {
             var book = _mapper.Map<Book>(dto);
@@ -69,6 +64,39 @@ namespace LibraryProject.Services
             _dbContext.SaveChanges();
 
             return book.Id;
+        }
+
+        public void Update(int id, UpdateBookDto dto)
+        {
+            var book = _dbContext
+             .Books
+             .FirstOrDefault(x => x.Id == id);
+
+            if (book is null)
+            {
+                throw new NotFoundException("Book not found");
+            }
+
+            book.IsAvailable = dto.IsAvailable;
+            book.ReleaseDate = dto.ReleaseDate;
+            book.BookStatusId = dto.BookStatusId;
+
+            _dbContext.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var book = _dbContext
+              .Books
+              .FirstOrDefault(x => x.Id == id);
+
+            if (book is null)
+            {
+                throw new NotFoundException("Book not found");
+            }
+
+            _dbContext.Books.Remove(book);
+            _dbContext.SaveChanges();
         }
     }
 }

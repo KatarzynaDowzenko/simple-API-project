@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using LibraryProject.Entities;
 using AutoMapper;
 using LibraryProject.Services;
+using LibraryProject.Middleware;
 
 namespace LibraryProject
 {
@@ -34,6 +35,8 @@ namespace LibraryProject
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBorrowedBookService, BorrowedBookService>();
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddScoped<RequestTimeMiddleware>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,12 +52,14 @@ namespace LibraryProject
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LibraryProject v1"));
             }
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
+            app.UseMiddleware<RequestTimeMiddleware>();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
-
+                       
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

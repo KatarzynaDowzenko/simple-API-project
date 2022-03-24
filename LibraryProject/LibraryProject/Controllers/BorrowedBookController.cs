@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace LibraryProject.Controllers
 {
     [Route("api/borrowedbooks")]
+    [ApiController]
     public class BorrowedBookController : ControllerBase
     {
         private readonly IBorrowedBookService _borrowedBookService;
@@ -27,36 +28,30 @@ namespace LibraryProject.Controllers
         {
             var borrowedBook = _borrowedBookService.GetById(id);
 
-            if (borrowedBook is null)
-            {
-                return NotFound();
-            }
-
             return Ok(borrowedBook);
         }
 
         [HttpPost]
         public ActionResult AddBorrowedBook([FromBody] AddBorrowingBookDto dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
+        {            
             var id = _borrowedBookService.Add(dto);
             return Created($"/api/restaurant/{id}", null);
+        }
+
+        [HttpPut("{id})")]
+        public ActionResult Update([FromBody] UpdateBorrowedBookDto dto, [FromRoute] int id)
+        {
+            _borrowedBookService.Update(id, dto);
+
+            return Ok();
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
-            var isDeleted = _borrowedBookService.Delete(id);
+            _borrowedBookService.Delete(id);
 
-            if (isDeleted)
-            {
-                return NoContent();
-            }
-            return NotFound();
+            return NoContent();
         }
     }
 }

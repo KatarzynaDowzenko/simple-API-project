@@ -1,27 +1,32 @@
 ﻿using AutoMapper;
 using LibraryProject.Entities;
+using LibraryProject.Exceptions;
 using LibraryProject.Models;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace LibraryProject.Services
 {
     public interface IBorrowedBookService
-    {
-        int Add(AddBorrowingBookDto dto);
-        bool Delete(int id);
+    {        
         IEnumerable<BorrowedBookDto> GetAll();
         BorrowedBookDto GetById(int id);
+        int Add(AddBorrowingBookDto dto);
+        void Update(int id, UpdateBorrowedBookDto dto);
+        void Delete(int id);
     }
 
     public class BorrowedBookService : IBorrowedBookService
     {
         private readonly LibraryDbContext _dbContext;
         private readonly IMapper _mapper;
-        public BorrowedBookService(LibraryDbContext dbContext, IMapper mapper)
+        private readonly ILogger<BorrowedBookService> _logger;
+        public BorrowedBookService(LibraryDbContext dbContext, IMapper mapper, ILogger<BorrowedBookService> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public IEnumerable<BorrowedBookDto> GetAll()
@@ -41,27 +46,16 @@ namespace LibraryProject.Services
                .BorrowedBooks
                .FirstOrDefault(x => x.Id == id);
 
-            if (borrowedBook is null) return null;
+            if (borrowedBook is null)
+                if (borrowedBook is null)
+                {
+                    throw new NotFoundException("BorrowedBook not found");
+                }
 
             var borrowedBookDto = _mapper.Map<BorrowedBookDto>(borrowedBook);
 
             return borrowedBookDto;
         }
-
-        public bool Delete(int id)
-        {
-            var borrowedBook = _dbContext
-              .BorrowedBooks
-              .FirstOrDefault(x => x.Id == id);
-
-            if (borrowedBook is null) return false;
-
-            _dbContext.BorrowedBooks.Remove(borrowedBook);
-            _dbContext.SaveChanges();
-
-            return true;
-        }
-
         public int Add(AddBorrowingBookDto dto)
         {
             var borrowedBook = _mapper.Map<BorrowedBook>(dto);
@@ -69,6 +63,36 @@ namespace LibraryProject.Services
             _dbContext.SaveChanges();
 
             return borrowedBook.Id;
+        }
+        public void Update(int id, UpdateBorrowedBookDto dto)
+        {
+            var borrowedBook = _dbContext
+             .BorrowedBooks
+             .FirstOrDefault(x => x.Id == id);
+
+            if (borrowedBook is null)
+            {
+                throw new NotFoundException("Book not found");
+            }
+
+            borrowedBook.DateOfReturningBook = dto.DateOfReturningBook;
+
+            _dbContext.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var borrowedBook = _dbContext
+              .BorrowedBooks
+              .FirstOrDefault(x => x.Id == id);
+
+            if (borrowedBook is null)
+            {
+                throw new NotFoundException("BorrowedBook not found");
+            }
+
+            _dbContext.BorrowedBooks.Remove(borrowedBook);
+            _dbContext.SaveChanges();
         }
     }
 }

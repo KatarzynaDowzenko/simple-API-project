@@ -22,6 +22,10 @@ namespace LibraryProject
                 .ForMember(m => m.CustomerId, c => c.MapFrom(s => s.CustomerId));
 
             CreateMap<AddCustomerDto, Customer>();
+
+            CreateMap<UpdateBookDto, Book>()
+                .ForMember(m => m.BookStatusId, c => c.MapFrom(s => s.BookStatusId));
+            
         }
     }
 }

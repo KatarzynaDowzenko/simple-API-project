@@ -27,11 +27,6 @@ namespace LibraryProject.Controllers
         {
             var customer = _customerService.GetById(id);
 
-            if (customer is null)
-            {
-                return NotFound();
-            }
-
             return Ok(customer);
         }
 
@@ -47,16 +42,20 @@ namespace LibraryProject.Controllers
             return Created($"/api/restaurant/{id}", null);
         }
 
+        [HttpPut("{id})")]
+        public ActionResult Update([FromBody] UpdateCustomerDto dto, [FromRoute] int id)
+        {
+            _customerService.Update(id, dto);
+
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
-            var isDeleted = _customerService.Delete(id);
+            _customerService.Delete(id);
 
-            if (isDeleted)
-            {
-                return NoContent();
-            }
-            return NotFound();
+            return NoContent();
         }
     }
 }
