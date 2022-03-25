@@ -2,6 +2,7 @@
 using LibraryProject.Entities;
 using LibraryProject.Exceptions;
 using LibraryProject.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,7 @@ namespace LibraryProject.Services
         {
             var customers = _dbContext
                 .Customers
+                .Include(x => x.BorrowedBooksList)
                 .ToList();
 
             var customersDto = _mapper.Map<List<CustomerDto>>(customers);
@@ -45,6 +47,7 @@ namespace LibraryProject.Services
         {
             var customer = _dbContext
                .Customers
+               .Include(x => x.BorrowedBooksList)
                .FirstOrDefault(x => x.Id == id);
 
             if (customer is null)
@@ -56,6 +59,7 @@ namespace LibraryProject.Services
 
             return customerDto;
         }
+
         public int Add(AddCustomerDto dto)
         {
             var customer = _mapper.Map<Customer>(dto);
@@ -83,6 +87,8 @@ namespace LibraryProject.Services
 
         public void Delete(int id)
         {
+            _logger.LogError($"Customer with id: {id} DELETE action invoked");
+
             var customer = _dbContext
               .Customers
               .FirstOrDefault(x => x.Id == id);

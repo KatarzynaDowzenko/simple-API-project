@@ -9,23 +9,18 @@ namespace LibraryProject
         public LibraryMappingProfile()
         {
             CreateMap<Book, BookDto>();
-                
-            CreateMap<BorrowedBook, BorrowedBookDto>()
-                .ForMember(m => m.BookId, c => c.MapFrom(s => s.BookId));
+
+            CreateMap<BorrowedBook, BorrowedBookDto>();
 
             CreateMap<Customer, CustomerDto>();
 
             CreateMap<AddBookDto, Book>();
 
-            CreateMap<AddBorrowingBookDto, BorrowedBook>()
-                .ForMember(m => m.BookId, c => c.MapFrom(s => s.BookId))
-                .ForMember(m => m.CustomerId, c => c.MapFrom(s => s.CustomerId));
+            CreateMap<AddBorrowingBookDto, BorrowedBook>();
 
             CreateMap<AddCustomerDto, Customer>();
 
-            CreateMap<UpdateBookDto, Book>()
-                .ForMember(m => m.BookStatusId, c => c.MapFrom(s => s.BookStatusId));
-            
+            CreateMap<UpdateBookDto, Book>();            
         }
     }
 }

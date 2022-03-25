@@ -8,7 +8,6 @@ namespace LibraryProject.Models
     {
         [Required]
         public bool IsAvailable { get; set; }
-        public DateTime ReleaseDate { get; set; }
         public int BookStatusId { get; set; }
     }
 }

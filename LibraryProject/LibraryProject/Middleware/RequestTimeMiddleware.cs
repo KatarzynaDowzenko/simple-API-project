@@ -23,7 +23,7 @@ namespace LibraryProject.Middleware
             _stopwatch.Stop();
 
             var elapsedMillliseconds = _stopwatch.ElapsedMilliseconds;
-            if (elapsedMillliseconds / 1000 > 4)
+            if (elapsedMillliseconds / 1000 > 5)
             {
                 var message = $"Request[{context.Request.Method} at {context.Request.Path} took {elapsedMillliseconds} ms";
 

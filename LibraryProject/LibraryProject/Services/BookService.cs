@@ -78,7 +78,6 @@ namespace LibraryProject.Services
             }
 
             book.IsAvailable = dto.IsAvailable;
-            book.ReleaseDate = dto.ReleaseDate;
             book.BookStatusId = dto.BookStatusId;
 
             _dbContext.SaveChanges();
@@ -86,6 +85,8 @@ namespace LibraryProject.Services
 
         public void Delete(int id)
         {
+            _logger.LogError($"Book with id: {id} DELETE action invoked");
+
             var book = _dbContext
               .Books
               .FirstOrDefault(x => x.Id == id);

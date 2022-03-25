@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LibraryProject.Entities;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace LibraryProject.Models
