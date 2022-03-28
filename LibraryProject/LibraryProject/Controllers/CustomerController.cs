@@ -18,7 +18,6 @@ namespace LibraryProject.Controllers
         public ActionResult<IEnumerable<CustomerDto>> GetAll()
         {
             var customers = _customerService.GetAll();
-
             return Ok(customers);
         }
 
@@ -26,35 +25,27 @@ namespace LibraryProject.Controllers
         public ActionResult<CustomerDto> Get([FromRoute] int id)
         {
             var customer = _customerService.GetById(id);
-
             return Ok(customer);
         }
 
         [HttpPost]
-        public ActionResult AddBook([FromBody] AddCustomerDto dto)
+        public ActionResult AddCustomer([FromBody] AddCustomerDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var id = _customerService.Add(dto);
-            return Created($"/api/restaurant/{id}", null);
+            return Created($"/api/customers/{id}", null);
         }
 
         [HttpPut("{id})")]
-        public ActionResult Update([FromBody] UpdateCustomerDto dto, [FromRoute] int id)
+        public ActionResult UpdateCustomer([FromBody] UpdateCustomerDto dto, [FromRoute] int id)
         {
             _customerService.Update(id, dto);
-
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute] int id)
+        public ActionResult DeleteCustomer([FromRoute] int id)
         {
             _customerService.Delete(id);
-
             return NoContent();
         }
     }

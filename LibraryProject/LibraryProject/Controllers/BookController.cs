@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace LibraryProject.Controllers
 {
-    [Route("api/book")]
+    [Route("api/books")]
     [ApiController]
     public class BookController : ControllerBase
     {
@@ -19,7 +19,6 @@ namespace LibraryProject.Controllers
         public ActionResult<IEnumerable<BookDto>> GetAll()
         {
             var books = _bookService.GetAll();
-
             return Ok(books);
         }
 
@@ -27,7 +26,6 @@ namespace LibraryProject.Controllers
         public ActionResult<BookDto> Get([FromRoute] int id)
         {
             var book = _bookService.GetById(id);
-
             return Ok(book);
         }
 
@@ -35,22 +33,20 @@ namespace LibraryProject.Controllers
         public ActionResult AddBook([FromBody] AddBookDto dto)
         {
             var id = _bookService.Add(dto);
-            return Created($"/api/restaurant/{id}", null);
+            return Created($"/api/books/{id}", null);
         }
 
         [HttpPut("{id})")]
-        public ActionResult Update([FromBody] UpdateBookDto dto, [FromRoute] int id)
+        public ActionResult UpdateBook([FromBody] UpdateBookDto dto, [FromRoute] int id)
         {
             _bookService.Update(id, dto);
-
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute] int id)
+        public ActionResult DeleteBook([FromRoute] int id)
         {
             _bookService.Delete(id);
-
             return NoContent();
         }
     }

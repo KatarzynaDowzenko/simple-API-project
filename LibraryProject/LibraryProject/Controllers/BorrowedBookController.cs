@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace LibraryProject.Controllers
 {
-    [Route("api/borrowedbooks")]
+    [Route("api/borrowed-books")]
     [ApiController]
     public class BorrowedBookController : ControllerBase
     {
@@ -16,17 +16,16 @@ namespace LibraryProject.Controllers
         }        
 
         [HttpPost]
-        public ActionResult AddBorrowedBook([FromBody] AddBorrowingBookDto dto)
+        public ActionResult AddBorrowedBook([FromBody] AddBorrowedBookDto dto)
         {            
             var id = _borrowedBookService.Add(dto);
-            return Created($"/api/restaurant/{id}", null);
+            return Created($"/api/borrowedbooks/{id}", null);
         }
 
         [HttpPut("{id})")]
-        public ActionResult Update([FromBody] UpdateBorrowedBookDto dto, [FromRoute] int id)
+        public ActionResult UpdateBorrowedBook([FromBody] UpdateBorrowedBookDto dto, [FromRoute] int id)
         {
             _borrowedBookService.Update(id, dto);
-
             return Ok();
         }
     }

@@ -16,7 +16,7 @@ namespace LibraryProject
 
             CreateMap<AddBookDto, Book>();
 
-            CreateMap<AddBorrowingBookDto, BorrowedBook>();
+            CreateMap<AddBorrowedBookDto, BorrowedBook>();
 
             CreateMap<AddCustomerDto, Customer>();
 

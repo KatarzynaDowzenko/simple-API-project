@@ -3,7 +3,6 @@ using LibraryProject.Entities;
 using LibraryProject.Exceptions;
 using LibraryProject.Models;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,8 +14,7 @@ namespace LibraryProject.Services
         BookDto GetById(int id);
         int Add(AddBookDto dto);
         void Update(int id, UpdateBookDto dto);
-        void Delete(int id);
-       
+        void Delete(int id);       
     }
 
     public class BookService : IBookService

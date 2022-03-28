@@ -1,11 +1,9 @@
-﻿using LibraryProject.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace LibraryProject.Models
 {
-    public class AddBorrowingBookDto
+    public class AddBorrowedBookDto
     {
         [Required]
         public int CustomerId { get; set; }

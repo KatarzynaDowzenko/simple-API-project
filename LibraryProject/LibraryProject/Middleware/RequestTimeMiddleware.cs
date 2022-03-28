@@ -26,7 +26,6 @@ namespace LibraryProject.Middleware
             if (elapsedMillliseconds / 1000 > 5)
             {
                 var message = $"Request[{context.Request.Method} at {context.Request.Path} took {elapsedMillliseconds} ms";
-
                 _logger.LogInformation(message);
             }
         }

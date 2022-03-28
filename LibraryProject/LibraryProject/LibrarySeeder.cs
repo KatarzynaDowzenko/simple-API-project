@@ -30,7 +30,11 @@ namespace LibraryProject
             {
                 new BookStatus()
                 {
-                    Status = "new/good"
+                    Status = "new"
+                },
+                new BookStatus()
+                {
+                    Status = "good"
                 },
                 new BookStatus()
                 {
@@ -56,6 +60,7 @@ namespace LibraryProject
                 }
             }
         }
+
         private IEnumerable<Book> GetBooks()
         {
             var books = new List<Book>()

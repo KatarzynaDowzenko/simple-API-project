@@ -3,15 +3,13 @@ using LibraryProject.Entities;
 using LibraryProject.Exceptions;
 using LibraryProject.Models;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace LibraryProject.Services
 {
     public interface IBorrowedBookService
     {
-        int Add(AddBorrowingBookDto dto);
+        int Add(AddBorrowedBookDto dto);
         void Update(int id, UpdateBorrowedBookDto dto);
     }
 
@@ -26,7 +24,7 @@ namespace LibraryProject.Services
             _mapper = mapper;
             _logger = logger;
         }
-        public int Add(AddBorrowingBookDto dto)
+        public int Add(AddBorrowedBookDto dto)
         {
             var borrowedBook = _mapper.Map<BorrowedBook>(dto);
             _dbContext.BorrowedBooks.Add(borrowedBook);
