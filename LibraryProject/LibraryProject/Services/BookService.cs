@@ -22,6 +22,7 @@ namespace LibraryProject.Services
         private readonly LibraryDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly ILogger<BookService> _logger;
+
         public BookService(LibraryDbContext dbContext, IMapper mapper, ILogger<BookService> logger)
         {
             _dbContext = dbContext;
@@ -55,6 +56,7 @@ namespace LibraryProject.Services
 
             return bookDto;
         }
+
         public int Add(AddBookDto dto)
         {
             var book = _mapper.Map<Book>(dto);
@@ -74,8 +76,7 @@ namespace LibraryProject.Services
             {
                 throw new NotFoundException("Book not found");
             }
-
-            book.IsAvailable = dto.IsAvailable;
+                     
             book.BookStatusId = dto.BookStatusId;
 
             _dbContext.SaveChanges();

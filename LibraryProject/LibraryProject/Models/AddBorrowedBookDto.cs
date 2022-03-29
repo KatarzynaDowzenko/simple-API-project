@@ -10,8 +10,5 @@ namespace LibraryProject.Models
 
         [Required]
         public int BookId { get; set; }
-
-        [Required]
-        public DateTime DateOfBorrowingBook { get; set; }
     }
 }

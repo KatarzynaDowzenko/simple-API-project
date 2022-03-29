@@ -10,6 +10,7 @@ namespace LibraryProject.Services
     public interface IBorrowedBookService
     {
         int Add(AddBorrowedBookDto dto);
+        bool IsBorrowed(int id);
         void Update(int id, UpdateBorrowedBookDto dto);
     }
 
@@ -17,13 +18,19 @@ namespace LibraryProject.Services
     {
         private readonly LibraryDbContext _dbContext;
         private readonly IMapper _mapper;
-        private readonly ILogger<BorrowedBookService> _logger;
-        public BorrowedBookService(LibraryDbContext dbContext, IMapper mapper, ILogger<BorrowedBookService> logger)
+
+        public BorrowedBookService(LibraryDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
-            _logger = logger;
         }
+
+        public bool IsBorrowed(int id)
+        {
+            var borrowed = _dbContext.BorrowedBooks.Any(x => !x.DateOfReturningBook.HasValue && x.BookId == id);
+            return borrowed;
+        }
+
         public int Add(AddBorrowedBookDto dto)
         {
             var borrowedBook = _mapper.Map<BorrowedBook>(dto);
@@ -45,7 +52,6 @@ namespace LibraryProject.Services
             }
 
             borrowedBook.DateOfReturningBook = dto.DateOfReturningBook;
-
             _dbContext.SaveChanges();
         }
     }

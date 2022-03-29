@@ -13,7 +13,7 @@ namespace LibraryProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,7 +28,7 @@ namespace LibraryProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: false)
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,9 +44,9 @@ namespace LibraryProject.Migrations
                     AuthorName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     AuthorLastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    TypeOfBook = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TypeOfBook = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false),
-                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BookStatusId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -68,7 +68,7 @@ namespace LibraryProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     BookId = table.Column<int>(type: "int", nullable: false),
-                    DateOfBorrowingBook = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: false),
+                    DateOfBorrowingBook = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOfReturningBook = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>

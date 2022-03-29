@@ -1,6 +1,7 @@
 ﻿using LibraryProject.Entities;
 using LibraryProject.Models;
 using AutoMapper;
+using System;
 
 namespace LibraryProject
 {
@@ -16,11 +17,16 @@ namespace LibraryProject
 
             CreateMap<AddBookDto, Book>();
 
-            CreateMap<AddBorrowedBookDto, BorrowedBook>();
+            CreateMap<AddBorrowedBookDto, BorrowedBook>()
+                .ForMember(x => x.DateOfBorrowingBook, s => s.MapFrom(m => DateTime.Now));
 
             CreateMap<AddCustomerDto, Customer>();
 
-            CreateMap<UpdateBookDto, Book>();            
+            CreateMap<UpdateBookDto, Book>();
+
+            CreateMap<UpdateBorrowedBookDto, BorrowedBook>();
+
+            CreateMap<UpdateCustomerDto, BorrowedBook>();
         }
     }
 }

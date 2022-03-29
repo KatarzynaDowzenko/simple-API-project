@@ -8,10 +8,12 @@ namespace LibraryProject
     public class LibrarySeeder
     {
         private readonly LibraryDbContext _dbContext;
+
         public LibrarySeeder(LibraryDbContext dbContext)
         {
             this._dbContext = dbContext;
         }
+
         public void SeedBookStatus()
         {
             if (_dbContext.Database.CanConnect())
@@ -24,6 +26,7 @@ namespace LibraryProject
                 }
             }
         }
+
         private IEnumerable<BookStatus> GetBookStatus()
         {
             var bookStatus = new List<BookStatus>()
@@ -42,7 +45,11 @@ namespace LibraryProject
                 },
                 new BookStatus()
                 {
-                    Status = "old / damaged"
+                    Status = "damaged"
+                },
+                 new BookStatus()
+                {
+                    Status = "old"
                 },
             };
             return bookStatus;
@@ -71,7 +78,6 @@ namespace LibraryProject
                     AuthorLastName = "Heller",
                     Title = "Paragraph 22",
                     TypeOfBook = "humorous prose and a war novel",
-                    IsAvailable = true,
                     ReleaseDate = new DateTime(1961,11,10),
                     BookStatusId = 3
                 },
@@ -82,7 +88,6 @@ namespace LibraryProject
                     AuthorLastName = "Tolkien",
                     Title = "The Lord Of The Rings",
                     TypeOfBook = "fantasy",
-                    IsAvailable = false,
                     ReleaseDate = new DateTime(1954,07,29),
                     BookStatusId = 3
                 },
@@ -93,7 +98,6 @@ namespace LibraryProject
                     AuthorLastName = "Fitzgerald",
                     Title = "The Great Gatsby",
                     TypeOfBook = "novel",
-                    IsAvailable = true,
                     ReleaseDate = new DateTime(1925,04,10),
                     BookStatusId = 2
                 },
@@ -104,7 +108,6 @@ namespace LibraryProject
                     AuthorLastName = "Sanderson",
                     Title = "The Way of Kings",
                     TypeOfBook = "fantasy",
-                    IsAvailable = true,
                     ReleaseDate = new DateTime(2010,08,31),
                     BookStatusId = 1
                 },
@@ -115,14 +118,12 @@ namespace LibraryProject
                     AuthorLastName = "Zafón",
                     Title = "The Angel's Game",
                     TypeOfBook = "Criminal story",
-                    IsAvailable = false,
                     ReleaseDate = new DateTime(2008,04,17),
                     BookStatusId = 3
                 }
             };
             return books;
         }
-
     }
 }
 

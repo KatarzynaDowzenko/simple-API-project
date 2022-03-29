@@ -54,6 +54,7 @@ namespace LibraryProject.Entities
                 .Property(c => c.DateOfBirth)
                 .IsRequired();
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionString);

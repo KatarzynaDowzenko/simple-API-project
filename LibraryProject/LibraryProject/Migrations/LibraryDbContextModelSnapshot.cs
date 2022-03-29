@@ -42,7 +42,7 @@ namespace LibraryProject.Migrations
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("ReleaseDate")
+                    b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
@@ -51,7 +51,9 @@ namespace LibraryProject.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("TypeOfBook")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
@@ -68,7 +70,6 @@ namespace LibraryProject.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -91,7 +92,6 @@ namespace LibraryProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBorrowingBook")
-                        .HasMaxLength(100)
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DateOfReturningBook")
@@ -114,7 +114,6 @@ namespace LibraryProject.Migrations
                         .UseIdentityColumn();
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasMaxLength(100)
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
@@ -143,26 +142,26 @@ namespace LibraryProject.Migrations
 
             modelBuilder.Entity("LibraryProject.Entities.BorrowedBook", b =>
                 {
-                    b.HasOne("LibraryProject.Entities.Book", "book")
+                    b.HasOne("LibraryProject.Entities.Book", "Book")
                         .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LibraryProject.Entities.Customer", "customer")
-                        .WithMany("BorrowedBooks")
+                    b.HasOne("LibraryProject.Entities.Customer", "Customer")
+                        .WithMany("BorrowedBooksList")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("book");
+                    b.Navigation("Book");
 
-                    b.Navigation("customer");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("LibraryProject.Entities.Customer", b =>
                 {
-                    b.Navigation("BorrowedBooks");
+                    b.Navigation("BorrowedBooksList");
                 });
 #pragma warning restore 612, 618
         }

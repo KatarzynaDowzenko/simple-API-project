@@ -1,7 +1,7 @@
 ﻿using LibraryProject.Models;
 using LibraryProject.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using System;
 
 namespace LibraryProject.Controllers
 {
@@ -18,8 +18,13 @@ namespace LibraryProject.Controllers
         [HttpPost]
         public ActionResult AddBorrowedBook([FromBody] AddBorrowedBookDto dto)
         {            
+            if(_borrowedBookService.IsBorrowed(dto.BookId))
+            {
+                throw new Exception("This book is already borrowed.");
+            }
+
             var id = _borrowedBookService.Add(dto);
-            return Created($"/api/borrowedbooks/{id}", null);
+            return Created($"/api/borrowed-books/{id}", null);
         }
 
         [HttpPut("{id})")]
