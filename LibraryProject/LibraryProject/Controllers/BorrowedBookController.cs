@@ -16,7 +16,7 @@ namespace LibraryProject.Controllers
         }        
 
         [HttpPost]
-        public ActionResult AddBorrowedBook([FromBody] AddBorrowedBookDto dto)
+        public ActionResult BorrowBook([FromBody] AddBorrowedBookDto dto)
         {            
             if(_borrowedBookService.IsBorrowed(dto.BookId))
             {
@@ -28,7 +28,7 @@ namespace LibraryProject.Controllers
         }
 
         [HttpPut("{id})")]
-        public ActionResult UpdateBorrowedBook([FromBody] UpdateBorrowedBookDto dto, [FromRoute] int id)
+        public ActionResult ReturndBook([FromBody] ReturnBorrowedBookDto dto, [FromRoute] int id)
         {
             _borrowedBookService.Update(id, dto);
             return Ok();

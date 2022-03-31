@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LibraryProject.Models
 {
-    public class UpdateBorrowedBookDto
+    public class ReturnBorrowedBookDto
     {
         [Required]
         public DateTime DateOfReturningBook { get; set; }

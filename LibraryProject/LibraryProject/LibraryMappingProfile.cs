@@ -9,7 +9,8 @@ namespace LibraryProject
     {
         public LibraryMappingProfile()
         {
-            CreateMap<Book, BookDto>();
+            CreateMap<Book, BookDto>()
+                .ForMember(x => x.Status, s => s.MapFrom(m => m.Status.Status));
 
             CreateMap<BorrowedBook, BorrowedBookDto>();
 
@@ -22,9 +23,9 @@ namespace LibraryProject
 
             CreateMap<AddCustomerDto, Customer>();
 
-            CreateMap<UpdateBookDto, Book>();
+            CreateMap<UpdateBookStatusDto, Book>();
 
-            CreateMap<UpdateBorrowedBookDto, BorrowedBook>();
+            CreateMap<ReturnBorrowedBookDto, BorrowedBook>();
 
             CreateMap<UpdateCustomerDto, BorrowedBook>();
         }

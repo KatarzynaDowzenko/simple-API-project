@@ -37,9 +37,9 @@ namespace LibraryProject.Controllers
         }
 
         [HttpPut("{id})")]
-        public ActionResult UpdateBook([FromBody] UpdateBookDto dto, [FromRoute] int id)
+        public ActionResult UpdateBook([FromBody] UpdateBookStatusDto dto, [FromRoute] int id)
         {
-            _bookService.Update(id, dto);
+            _bookService.UpdateStatus(id, dto);
             return Ok();
         }
 

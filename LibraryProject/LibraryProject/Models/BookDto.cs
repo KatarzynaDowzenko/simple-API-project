@@ -9,7 +9,7 @@ namespace LibraryProject.Models
         public string AuthorLastName { get; set; }
         public string Title { get; set; }
         public string TypeOfBook { get; set; }
-        public bool IsAvailable { get; set; }
         public DateTime ReleaseDate { get; set; }
+        public string Status { get; set; }
     }
 }

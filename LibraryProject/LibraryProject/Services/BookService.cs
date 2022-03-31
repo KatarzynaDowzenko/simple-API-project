@@ -2,6 +2,7 @@
 using LibraryProject.Entities;
 using LibraryProject.Exceptions;
 using LibraryProject.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace LibraryProject.Services
         IEnumerable<BookDto> GetAll();
         BookDto GetById(int id);
         int Add(AddBookDto dto);
-        void Update(int id, UpdateBookDto dto);
+        void UpdateStatus(int id, UpdateBookStatusDto dto);
         void Delete(int id);       
     }
 
@@ -34,6 +35,7 @@ namespace LibraryProject.Services
         {
             var books = _dbContext
                 .Books
+                .Include(x => x.Status)
                 .ToList();
 
             var booksDto = _mapper.Map<List<BookDto>>(books);
@@ -45,6 +47,7 @@ namespace LibraryProject.Services
         {
             var book = _dbContext
                .Books
+               .Include(x => x.Status)
                .FirstOrDefault(x => x.Id == id);
 
             if (book is null)
@@ -66,7 +69,7 @@ namespace LibraryProject.Services
             return book.Id;
         }
 
-        public void Update(int id, UpdateBookDto dto)
+        public void UpdateStatus(int id, UpdateBookStatusDto dto)
         {
             var book = _dbContext
              .Books

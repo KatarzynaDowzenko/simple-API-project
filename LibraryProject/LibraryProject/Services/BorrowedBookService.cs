@@ -2,7 +2,6 @@
 using LibraryProject.Entities;
 using LibraryProject.Exceptions;
 using LibraryProject.Models;
-using Microsoft.Extensions.Logging;
 using System.Linq;
 
 namespace LibraryProject.Services
@@ -11,7 +10,7 @@ namespace LibraryProject.Services
     {
         int Add(AddBorrowedBookDto dto);
         bool IsBorrowed(int id);
-        void Update(int id, UpdateBorrowedBookDto dto);
+        void Update(int id, ReturnBorrowedBookDto dto);
     }
 
     public class BorrowedBookService : IBorrowedBookService
@@ -40,7 +39,7 @@ namespace LibraryProject.Services
             return borrowedBook.Id;
         }
 
-        public void Update(int id, UpdateBorrowedBookDto dto)
+        public void Update(int id, ReturnBorrowedBookDto dto)
         {
             var borrowedBook = _dbContext
             .BorrowedBooks
