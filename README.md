@@ -17,3 +17,5 @@ The project uses the principles of REST API - uniform interface, layered system 
 #### Software required to run project:
 - Visual Studio 2022,
 - SQL Server Express.
+
+![swagger screenshot](https://github.com/KatarzynaDowzenko/simple-web-api-library/blob/main/README/project%20function%20view.png)
