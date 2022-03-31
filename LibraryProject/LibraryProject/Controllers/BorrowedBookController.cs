@@ -27,7 +27,7 @@ namespace LibraryProject.Controllers
             return Created($"/api/borrowed-books/{id}", null);
         }
 
-        [HttpPut("{id})")]
+        [HttpPut("{id}")]
         public ActionResult ReturndBook([FromBody] ReturnBorrowedBookDto dto, [FromRoute] int id)
         {
             _borrowedBookService.Update(id, dto);

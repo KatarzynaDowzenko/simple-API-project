@@ -35,7 +35,7 @@ namespace LibraryProject.Controllers
             return Created($"/api/customers/{id}", null);
         }
 
-        [HttpPut("{id})")]
+        [HttpPut("{id}")]
         public ActionResult UpdateCustomer([FromBody] UpdateCustomerDto dto, [FromRoute] int id)
         {
             _customerService.Update(id, dto);

@@ -36,7 +36,7 @@ namespace LibraryProject.Controllers
             return Created($"/api/books/{id}", null);
         }
 
-        [HttpPut("{id})")]
+        [HttpPut("{id}")]
         public ActionResult UpdateBook([FromBody] UpdateBookStatusDto dto, [FromRoute] int id)
         {
             _bookService.UpdateStatus(id, dto);
