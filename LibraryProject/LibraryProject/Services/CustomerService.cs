@@ -77,7 +77,7 @@ namespace LibraryProject.Services
 
             if (customer is null)
             {
-                throw new NotFoundException("Book not found");
+                throw new NotFoundException("Customer not found");
             }
 
             customer.LastName = dto.LastName;
